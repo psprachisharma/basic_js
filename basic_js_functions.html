@@ -1,0 +1,238 @@
+<html>
+    <head>
+        <title></title>
+        <script>
+              const increment = (function() {
+                return function increment(number, value=1){
+                    return number + value;
+                };
+            })();
+            alert(increment(5,2));
+            alert(increment(5));
+            const sum = (function(){
+                return function sum(...args) {
+                    return args.reduce((a,b) => a+b,0);
+                };
+            })();
+            alert("Sum="+sum(2,3,1,5,7));
+            const arr1 = ['JAN', 'FEB', 'MAR', 'APR', 'MAY'];
+            let arr2, arr3;
+            (function() {
+                arr2 = arr1;
+                arr3 = [...arr1];
+                arr1[0] = 'potato'
+            })();
+            alert("arr2="+arr2);
+            alert("arr3="+arr3);
+            var voxel = {x:3.6, y:7.4, z:6.54};
+            var u = voxel.x; // u = 3.6
+            var v = voxel.y; // v = 7.4
+            var w = voxel.z; // w = 6.54
+
+            const {x:a, y:b, z:c} = voxel; // a =3.6, b=7.4, c=6.54
+
+            const LOCAL_FORECAST = {
+                today: {min: 72, max:83},
+                tomorrow: {min: 73.3, max: 84.6}
+            };
+
+            function getMaxOfTmrw(forecast) {
+                "use strict";
+
+                const { tomorrow : {max : maxOfTomorrow}} = forecast;
+
+                return maxOfTomorrow;
+            }
+
+            alert(getMaxOfTmrw(LOCAL_FORECAST));
+
+            const [z, x, , , y] = [1,2,3,4,5,6];
+            alert(z+","+x+","+y);
+
+            let ab =8, bc=6;
+            (() => {
+                "use strict";
+                [ab,bc] = [bc,ab];
+            })();
+            alert("a="+ab+"b="+bc);
+            const source = [1,2,3,4,5,6,7,8,9,10];
+            function removeFirstTwo(list){
+                const[,,...arr4] = list;
+                //or
+                const[a,b,...arr5] = list;
+                return arr4;
+            }
+            const arr6 = removeFirstTwo(source);
+            alert(arr6);
+            alert(source);
+
+            const stats1 = {
+                max: 56.78,
+                standard_deviation: 4.34,
+                median: 34.54,
+                mode: 23.87,
+                min: -0.75,
+                average: 35.85
+            };
+            const half1 = (function() {
+
+                return function half(stats){
+                    return (stats.max + stats.min)/2.0;
+                };
+            })();
+            alert(stats1);
+            alert(half1(stats1));
+            const stats2 = {
+                max: 56.78,
+                standard_deviation: 4.34,
+                median: 34.54,
+                mode: 23.87,
+                min: -0.75,
+                average: 35.85
+            };
+            const half2 = (function() {
+
+                return function half({max, min}){
+                    return (max + min)/2.0;
+                };
+            })();
+            alert(stats2);
+            alert(half2(stats2));
+
+            const person = {
+                name: "Zodiac Hasbro",
+                age: 56
+            };
+
+            const greeting = `Hello, my name is ${person.name}! 
+            I am ${person.age} years old.`;
+
+            alert(greeting);
+
+            
+         const result = {
+                success: ["max-length", "no-amd", "prefer-arrow-functions"],
+                failure: ["no-var", "var-on-top", "linebreak"],
+                skipped: ["id-blacklist", "no-dup-keys"]
+            };
+            function makeList(arr){
+                const resultDisplayArray = [];
+                for(let i=0;i<arr.length;i++){
+                    resultDisplayArray.push(`<li class="text-warning">${arr[i]}</li>">`);
+                }
+                return resultDisplayArray;
+            }
+            const resultDisplayArray = makeList(result.failure);
+
+            alert(resultDisplayArray);
+            // makeList(result.failure) should return:
+            // [`<li class="text-warning">no-var</li>`,
+            // `<li class="text-warning">var-on-top</li>`,
+            // `<li class="text-warning">linebreak</li>`]
+
+            const createPerson = (name, age, gender) => ({name, age, gender});
+
+            alert(createPerson("Zodiac Hasbro", 56, "male"));
+
+            const bicycle = {
+                gear: 2,
+                setGear(newGear) {
+                    "use strict";
+                    this.gear = newGear;
+                }
+            };
+
+            bicycle.setGear(3);
+            alert(bicycle.gear);
+
+           /*  var SpaceShuttle = function(targetPlanet) {
+                this.targetPlanet = targetPlanet;
+            } */
+            class SpaceShuttle{
+                 constructor(targetPlanet){
+                     this.targetPlanet = targetPlanet;
+                 }
+            }
+            var zeus = new SpaceShuttle('Jupiter');
+
+            alert(zeus.targetPlanet);
+
+            function makeClass() {
+                class Vegetable {
+                    constructor(name){
+                        this.name = name;
+                    }
+                }
+                return Vegetable;
+            }
+
+            const Vegetable = makeClass();
+            const carrot = new Vegetable('carrot');
+            alert(carrot.name);
+
+            class Book {
+                constructor(author) {
+                    this._author = author;
+                }
+                //getter
+                get writer(){
+                    return this.author;
+                }
+                //setter
+                set writer(updatedAuthor){
+                    this._author = updatedAuthor;
+                }
+            }
+            function makeClass1(){
+                class Thermostat{
+                    constructor(temp){
+                        this._temp = 5/9 * (temp-32); // in Fahrenheit
+                    }
+                    get temperature(){
+                        return this._temp;
+                    }
+                    set temperature(updatedTemp){
+                        this._temp = updatedTemp;
+                    }
+                }
+                return Thermostat;
+            }
+            const Thermostat = makeClass1();
+            const thermos = new Thermostat(76);
+            let temp = thermos.temperature;
+            alert(temp);
+            thermos.temperature = 26;
+            temp = thermos.temperature;
+            alert(temp);
+
+            // export and import functions
+            /* string_function.js
+            export const capitalizeString = str => str.toUpperCase() */
+
+            /* import {capitalizeString} from "./string_function"
+            const cap = capitalizeString("hello!");
+
+            alert(cap); */
+
+            /* const capitalizeString = (string) => {
+                return string.charAt(0).toUpperCase() +string.slice(1);
+            }
+            export {capitalizeString};
+
+            export const foo = "bar";
+            export const bar = "foo"; */
+            //import * as capitalizeStrings  from "capitalize_strings"; using all the functions from the other file "capitalize_strings"
+
+           /*  export default function subtract(x,y){
+                return x-y;
+            }
+
+            import subtract from "math_functions"; // curly braces not used in default export
+
+            subtract(7,4); */
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>
