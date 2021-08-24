@@ -204,3 +204,112 @@ let p = {
 };
 
 p.p1 + p.p2 // => 3
+
+//Spread Operator
+
+let position = {x:0, y:0};
+let dimensions = { width: 100, height: 75};
+let rect = {...position, ...dimensions};
+rect.x + rect.y + rect.width + rect.height // => 175
+
+/* If the object that is spread and the object it is being spread into both have a property 
+with the same name, then the value of that property will be the one that comes last: */
+let o = { x: 1 };
+let p = { x: 0, ...o};
+p.x // => 1 : the value from object o overrides the initial value
+let q = {...o, x: 2};
+q.x // => 2: the value 2 overrides the previous value from o
+
+/* Also note that the spread operator only spreads the own properties of an object, 
+not any inherited ones: */
+
+let o = Object.create({x: 1}); // o inherits the property x
+let p = {...o};
+p.x                            // => undefined
+
+// Shorthand methods
+
+let square = {
+    area: function(){
+        return this.side*this.side;
+    },
+    side: 10
+};
+square.area() // => 100
+
+//or
+
+let square = {
+    area() { return this.side*this.side;},
+    side: 10
+};
+square.area() // => 100
+
+const METHOD_NAME = "m";
+const symbol = Symbol();
+let weirdMethods = {
+    "method With Spaces" (x) { return x+1;},
+    [METHOD_NAME] (x) { return x+2;},
+    [symbol] (x) { return x+3;}
+};
+weirdMethods["method With Spaces"](1)   // => 2
+weirdMethods[METHOD_NAME](1)            // => 3
+weirdMethods[symbol](1)                 // => 4
+
+// Property Getters and Setters
+let o = {
+    //An ordinary data property
+    dataProp: value,
+
+    //An accessor property defined as a pair of functions.
+    get accessorProp() { return this.dataProp; },
+    set accessorProp(value) { this.dataProp = value; }
+};
+
+let p = {
+    // x and y are regular read-write data properties.
+    x: 1.0,
+    y: 1.0,
+
+    // r is a read-write accessor poroperty with getter and setter.
+    // Don't forget to put a comma after accessor methods.
+    get r(){ return Math.hypot(this.x, this.y);},
+    set r(newvalue) {
+        let oldvalue = Math.hypot(this.x, this.y);
+        let ratio = newvalue/oldvalue;
+        this.x *= ratio;
+        this.y *= ratio;
+    },
+    // theta is a read-only accessor property with getter only.
+    get theta() { return Math.atan2(this.y, this.x);}
+};
+p.r // => MATH.SQART2
+p.theta // => MATH.PI / 4
+
+// This object generates strictly increasing serial numbers.
+const serialnum = {
+    // This data property holds the next serial number.
+    // The _ in the property name hints that it is for internal use only.
+    _n: 0,
+
+    // Return the current value and increment it
+    get next() { return this._n++; },
+
+    // Set a new value of n, but only if it's larger than the current value
+    set next(n) {
+        if( n > this._n) this._n = n;
+        else throw new Error("serial number can only be set to a larger value");
+    }
+};
+serialnum.next = 10;    // Set the starting serial number
+serialnum.next          // => 10
+serialnum.next          // => 11: different value each time we get next
+
+// This object has accessor properties that return random numbers.
+// The expression "random.octet", for example, yields a random number
+// between 0 and 255 each time it is evaluated.
+const random = {
+    get octet() { return Math.floor(Map.random()*256);},
+    get uint16() { return Math.floor(Math.random()*65536);},
+    get int16() { return Math.floor(Math.random()*65536)-32768;}
+};
